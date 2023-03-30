@@ -1,17 +1,21 @@
+import shortid from 'shortid';
 import { ButtonsContainer, Button } from './Feedback.styled';
 
-const FeedbackOptions = ({ good, neutral, bad }) => {
+const FeedbackOptions = ({ options, onLeaveFeedback }) => {
+  const keys = Object.keys(options);
   return (
     <ButtonsContainer>
-      <Button onClick={() => good()} type="button">
-        Good
-      </Button>
-      <Button onClick={() => neutral()} type="button">
-        Neutral
-      </Button>
-      <Button onClick={() => bad()} type="button">
-        Bad
-      </Button>
+      {keys.map(key => (
+        <Button
+          key={shortid.generate()}
+          name={key}
+          value={key}
+          onClick={e => onLeaveFeedback(e)}
+          type="button"
+        >
+          {key}
+        </Button>
+      ))}
     </ButtonsContainer>
   );
 };

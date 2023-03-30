@@ -12,16 +12,21 @@ export const App = () => {
 
   const options = { good, neutral, bad };
 
-  const handleIncrementGood = e => {
-    setGood(state => state + 1);
+  const handeIncrement = e => {
+    switch (e.target.name) {
+      case 'good':
+        setGood(state => state + 1);
+        break;
+      case 'neutral':
+        setNeutral(state => state + 1);
+        break;
+      case 'bad':
+        setBad(state => state + 1);
+        break;
+      default:
+        return;
+    }
   };
-  const handleIncrementNeutral = e => {
-    setNeutral(state => state + 1);
-  };
-  const handleIncrementBad = e => {
-    setBad(state => state + 1);
-  };
-
   const countTotalFeedback = () => {
     return good + neutral + bad;
   };
@@ -35,11 +40,7 @@ export const App = () => {
       <Section
         title="Please leave feedback"
         children={
-          <FeedbackOptions
-            good={handleIncrementGood}
-            bad={handleIncrementBad}
-            neutral={handleIncrementNeutral}
-          />
+          <FeedbackOptions options={options} onLeaveFeedback={handeIncrement} />
         }
       />
       {!countTotalFeedback() ? (
